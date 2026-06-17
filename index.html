@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>En memoria de Cesar Joel Amezcua Corona</title>
+<style>
+  @font-face{font-family:'Cormorant';src:url('./fonts/Cormorant.woff2') format('woff2');font-display:swap;}
+  @font-face{font-family:'Jost';src:url('./fonts/Jost.woff2') format('woff2');font-display:swap;}
+
+  :root{
+    --bg:#0b0b0d; --bg2:#141215; --gold:#c9a14a; --gold-l:#ecd79a; --gold-d:#8f6f2f;
+    --cream:#e9e3d6; --soft:#a59c89; --line:rgba(201,161,74,.30);
+    --ease:cubic-bezier(.22,1,.3,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  html,body{background:var(--bg);color:var(--cream);}
+  body{font-family:'Cormorant',serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  img{display:block;}
+  a{color:inherit;}
+  .wrap{max-width:480px;margin:0 auto;position:relative;}
+
+  .gold{color:var(--gold);}
+  .foil{background:linear-gradient(180deg,var(--gold-l) 0%,var(--gold) 52%,var(--gold-d) 100%);
+        -webkit-background-clip:text;background-clip:text;color:transparent;}
+  .label{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);font-weight:400;}
+  section{padding:64px 30px;position:relative;text-align:center;}
+
+  .cross{width:30px;color:var(--gold);}
+  .divider{width:150px;height:14px;color:var(--gold);margin:20px auto;opacity:.9;}
+  .divider path{stroke:currentColor;fill:none;stroke-width:1;}
+  .divider .dia{fill:currentColor;stroke:none;}
+
+  /* ===== PUERTA / MÚSICA ===== */
+  #gate{position:fixed;inset:0;z-index:60;background:radial-gradient(120% 80% at 50% 30%,#16131a,var(--bg) 70%);
+        display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;text-align:center;padding:44px;
+        transition:opacity 1.3s var(--ease),visibility 1.3s;}
+  #gate.hidden{opacity:0;visibility:hidden;}
+  #gate .cross{width:38px;}
+  #gate .g-name{font-size:34px;line-height:1.1;color:var(--cream);}
+  #gate .g-sub{font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--soft);}
+  #gate .g-open{margin-top:10px;font-family:'Jost',sans-serif;display:inline-flex;align-items:center;gap:10px;
+        padding:13px 32px;border:1px solid var(--gold);border-radius:40px;font-size:11px;letter-spacing:.3em;
+        text-transform:uppercase;color:var(--gold-l);cursor:pointer;background:transparent;animation:breathe 4s ease-in-out infinite;}
+  @keyframes breathe{0%,100%{opacity:.85;}50%{opacity:1;}}
+
+  #music{position:fixed;top:16px;right:16px;z-index:50;width:42px;height:42px;border-radius:50%;
+         border:1px solid var(--line);background:rgba(11,11,13,.7);backdrop-filter:blur(6px);
+         display:none;align-items:center;justify-content:center;cursor:pointer;color:var(--gold);}
+  body.entered #music{display:flex;}
+  #music .bar{width:2px;height:11px;background:currentColor;margin:0 1px;border-radius:2px;animation:eq 1.1s ease-in-out infinite;}
+  #music .bar:nth-child(2){animation-delay:.2s;height:15px;} #music .bar:nth-child(3){animation-delay:.4s;}
+  @keyframes eq{0%,100%{transform:scaleY(.5);}50%{transform:scaleY(1);}}
+  #music.paused .bar{animation-play-state:paused;}
+
+  /* ===== HERO / PORTADA ===== */
+  .hero{padding-top:78px;}
+  .hero .glow{position:absolute;top:0;left:50%;transform:translateX(-50%);width:130%;height:340px;
+        background:radial-gradient(closest-side,rgba(201,161,74,.14),transparent 72%);pointer-events:none;}
+  .portada{position:relative;width:min(76vw,310px);margin:22px auto 0;}
+  .portada .ph{position:relative;border:1px solid var(--gold);padding:7px;background:#000;}
+  .portada .ph::before{content:"";position:absolute;inset:3px;border:1px solid rgba(201,161,74,.45);pointer-events:none;z-index:2;}
+  .portada img{width:100%;display:block;}
+  .corner{position:absolute;width:30px;height:30px;color:var(--gold);z-index:3;}
+  .corner path{stroke:currentColor;fill:none;stroke-width:1.1;stroke-linecap:round;}
+  .corner.c1{top:-9px;left:-9px;} .corner.c2{top:-9px;right:-9px;transform:scaleX(-1);}
+  .corner.c3{bottom:-9px;left:-9px;transform:scaleY(-1);} .corner.c4{bottom:-9px;right:-9px;transform:scale(-1);}
+  .hero .name{font-size:20px;letter-spacing:.16em;text-transform:uppercase;color:var(--cream);margin-top:30px;}
+  .hero .name b{display:block;font-size:30px;font-weight:600;letter-spacing:.1em;margin-top:2px;}
+  .hero .anniv{font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.36em;text-transform:uppercase;color:var(--gold);margin-top:16px;}
+
+  /* ===== PENSAMIENTO ===== */
+  .think{background:var(--bg2);}
+  .think .poem{font-size:23px;line-height:1.62;font-style:italic;color:var(--cream);max-width:360px;margin:0 auto;}
+  .think .poem span{display:block;margin-bottom:18px;}
+  .think .poem span:last-child{margin-bottom:0;}
+
+  /* ===== MISA ===== */
+  .misa .when{font-family:'Jost',sans-serif;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin:6px 0 4px;}
+  .misa h2{font-size:30px;color:var(--cream);}
+  .misa .place{font-size:21px;color:var(--cream);margin-top:10px;}
+  .misa .btn{display:inline-block;margin-top:20px;font-family:'Jost',sans-serif;padding:12px 28px;font-size:11px;
+        letter-spacing:.26em;text-transform:uppercase;color:var(--gold-l);border:1px solid var(--gold);border-radius:2px;
+        text-decoration:none;transition:background .5s var(--ease),color .5s var(--ease);}
+  .misa .btn:hover{background:var(--gold);color:var(--bg);}
+
+  /* ===== GALERÍA ===== */
+  .gallery{padding-left:0;padding-right:0;}
+  .gal{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin-top:26px;cursor:grab;}
+  .gal::-webkit-scrollbar{display:none;}
+  .gal-track{display:flex;gap:14px;padding:0 24px;width:max-content;}
+  .gframe{flex:0 0 auto;width:200px;height:268px;border:1px solid var(--gold);padding:5px;background:#000;position:relative;}
+  .gframe::before{content:"";position:absolute;inset:2px;border:1px solid rgba(201,161,74,.4);pointer-events:none;z-index:2;}
+  .gframe img{width:100%;height:100%;object-fit:cover;display:block;}
+
+  /* ===== AGRADECIMIENTO ===== */
+  .thanks{background:var(--bg2);}
+  .thanks p{font-size:21px;line-height:1.6;font-style:italic;color:var(--cream);max-width:360px;margin:0 auto;}
+
+  footer{padding:42px 30px 56px;text-align:center;}
+  footer .f-name{font-size:20px;letter-spacing:.1em;color:var(--cream);margin-top:14px;}
+  footer .credit{margin-top:16px;}
+  footer .credit-link{display:inline-block;font-family:'Jost',sans-serif;font-size:9px;letter-spacing:.3em;
+        text-transform:uppercase;color:var(--soft);text-decoration:none;transition:color .4s;}
+  footer .credit-link:hover{color:var(--gold);}
+
+  /* ===== MOTION (sereno) ===== */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity 1.4s var(--ease),transform 1.4s var(--ease);}
+  .reveal.in{opacity:1;transform:none;}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1!important;transform:none!important;}
+    #gate .g-open{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+  body.still .reveal{opacity:1!important;transform:none!important;transition:none!important;}
+</style>
+</head>
+<body>
+
+<!-- gradiente dorado reutilizable para la cruz -->
+<svg width="0" height="0" style="position:absolute"><defs>
+  <linearGradient id="goldgrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#ecd79a"/><stop offset="0.5" stop-color="#c9a14a"/><stop offset="1" stop-color="#8f6f2f"/>
+  </linearGradient>
+</defs></svg>
+
+<!-- ====== PUERTA ====== -->
+<div id="gate">
+  <svg class="cross" viewBox="0 0 40 56"><path d="M18 3 h4 v11 h12 v4 h-12 v35 h-4 v-35 h-12 v-4 h12 z" fill="url(#goldgrad)"/></svg>
+  <div class="g-sub">En memoria de</div>
+  <div class="g-name">Cesar Joel<br>Amezcua Corona</div>
+  <button class="g-open" id="enter">Entrar</button>
+</div>
+
+<div id="music" class="paused"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
+<audio id="audio" loop preload="none"><source src="./music/1.mp3" type="audio/mpeg"></audio>
+
+<div class="wrap">
+
+  <!-- ====== HERO / PORTADA ====== -->
+  <section class="hero">
+    <div class="glow"></div>
+    <svg class="cross reveal" viewBox="0 0 40 56" style="margin:0 auto;"><path d="M18 3 h4 v11 h12 v4 h-12 v35 h-4 v-35 h-12 v-4 h12 z" fill="url(#goldgrad)"/></svg>
+    <div class="portada reveal">
+      <svg class="corner c1" viewBox="0 0 30 30"><path d="M3 13 C3 7 7 3 13 3 M3 20 C3 9 9 3 20 3 M7 7 C11 7 14 9 16 13"/></svg>
+      <svg class="corner c2" viewBox="0 0 30 30"><path d="M3 13 C3 7 7 3 13 3 M3 20 C3 9 9 3 20 3 M7 7 C11 7 14 9 16 13"/></svg>
+      <svg class="corner c3" viewBox="0 0 30 30"><path d="M3 13 C3 7 7 3 13 3 M3 20 C3 9 9 3 20 3 M7 7 C11 7 14 9 16 13"/></svg>
+      <svg class="corner c4" viewBox="0 0 30 30"><path d="M3 13 C3 7 7 3 13 3 M3 20 C3 9 9 3 20 3 M7 7 C11 7 14 9 16 13"/></svg>
+      <div class="ph"><img src="./portada.jpeg" alt="Cesar Joel Amezcua Corona"></div>
+    </div>
+    <div class="name reveal">Cesar Joel<b>Amezcua Corona</b></div>
+    <div class="anniv reveal">Primer aniversario luctuoso</div>
+  </section>
+
+  <!-- ====== PENSAMIENTO ====== -->
+  <section class="think">
+    <svg class="cross reveal" viewBox="0 0 40 56" style="margin:0 auto;width:24px;"><path d="M18 3 h4 v11 h12 v4 h-12 v35 h-4 v-35 h-12 v-4 h12 z" fill="url(#goldgrad)"/></svg>
+    <svg class="divider reveal" viewBox="0 0 150 14"><path d="M8 7 H58"/><path d="M142 7 H92"/><path class="dia" d="M75 1.5 L79 7 L75 12.5 L71 7 Z"/><path d="M58 7 C63 4 67 4 71 7 M92 7 C87 4 83 4 79 7"/></svg>
+    <p class="poem reveal">
+      <span>Señor, Dios mío: Hoy vuelven<br>las lágrimas a caer como perlas<br>al vacío, recordando a un ser<br>querido y fallecido.</span>
+      <span>Pero nuestro amor<br>es tan grande hacia ti<br>que no cuestionamos<br>nada: está contigo.</span>
+      <span>Tú le cuidas como le cuidaríamos<br>aquí en la Tierra, mientras en<br>nuestros corazones siga<br>viviendo, sólo su cuerpo<br>se habrá marchado.</span>
+    </p>
+  </section>
+
+  <!-- ====== MISA ====== -->
+  <section class="misa">
+    <div class="label reveal">Lo acompañamos en oración</div>
+    <div class="when reveal">Lunes 22 de Junio · 7:00 PM</div>
+    <h2 class="reveal">Santa Misa</h2>
+    <div class="place reveal">Santuario San Juan Pablo II</div>
+    <a class="btn reveal" href="https://maps.app.goo.gl/To4hn9hp3fRZSCLy7" target="_blank" rel="noopener">Ver ubicación</a>
+  </section>
+
+  <!-- ====== GALERÍA ====== -->
+  <section class="gallery">
+    <div class="label reveal">Recordándolo</div>
+    <div class="gal reveal" id="gal">
+      <div class="gal-track" id="galTrack">
+        <div class="gframe"><img src="./galeria/g01.jpg" loading="lazy" alt=""></div>
+        <div class="gframe"><img src="./galeria/g02.jpg" loading="lazy" alt=""></div>
+        <div class="gframe"><img src="./galeria/g03.jpg" loading="lazy" alt=""></div>
+        <div class="gframe"><img src="./galeria/g04.jpg" loading="lazy" alt=""></div>
+        <div class="gframe"><img src="./galeria/g05.jpg" loading="lazy" alt=""></div>
+        <div class="gframe"><img src="./galeria/g06.jpg" loading="lazy" alt=""></div>
+        <div class="gframe"><img src="./galeria/g07.jpg" loading="lazy" alt=""></div>
+        <div class="gframe"><img src="./galeria/g08.jpg" loading="lazy" alt=""></div>
+        <div class="gframe"><img src="./galeria/g09.jpg" loading="lazy" alt=""></div>
+        <div class="gframe"><img src="./galeria/g10.jpg" loading="lazy" alt=""></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== AGRADECIMIENTO ====== -->
+  <section class="thanks">
+    <svg class="divider reveal" viewBox="0 0 150 14"><path d="M8 7 H58"/><path d="M142 7 H92"/><path class="dia" d="M75 1.5 L79 7 L75 12.5 L71 7 Z"/><path d="M58 7 C63 4 67 4 71 7 M92 7 C87 4 83 4 79 7"/></svg>
+    <p class="reveal">Fam. Amezcua Corona agradecemos infinitamente todas y cada una de sus oraciones encaminados a su descanso eterno.</p>
+  </section>
+
+  <footer>
+    <svg class="cross" viewBox="0 0 40 56" style="margin:0 auto;width:22px;"><path d="M18 3 h4 v11 h12 v4 h-12 v35 h-4 v-35 h-12 v-4 h12 z" fill="url(#goldgrad)"/></svg>
+    <div class="f-name">Cesar Joel Amezcua Corona</div>
+    <div class="credit"><a class="credit-link" href="https://www.diezmedia.mx" target="_blank" rel="noopener">Diez Creatividad</a></div>
+  </footer>
+
+</div>
+
+<script>
+  var params = new URLSearchParams(location.search);
+
+  // ====== Puerta / música ======
+  var gate=document.getElementById('gate'), audio=document.getElementById('audio'), music=document.getElementById('music');
+  var heroReveals=document.querySelectorAll('.hero .reveal');
+  function enter(){
+    gate.classList.add('hidden'); document.body.classList.add('entered');
+    heroReveals.forEach(function(el){ el.classList.add('in'); });
+    audio.play().then(function(){ music.classList.remove('paused'); }).catch(function(){});
+  }
+  if (params.get('demo')){ document.body.classList.add('still','entered'); gate.classList.add('hidden'); }
+  document.getElementById('enter').addEventListener('click', enter);
+  music.addEventListener('click', function(){
+    if (audio.paused){ audio.play().then(function(){music.classList.remove('paused');}).catch(function(){}); }
+    else { audio.pause(); music.classList.add('paused'); }
+  });
+
+  // ====== Reveals al hacer scroll ======
+  document.querySelectorAll('section, footer').forEach(function(sec){
+    Array.prototype.forEach.call(sec.querySelectorAll('.reveal'), function(el,i){ el.style.transitionDelay=(i*0.12)+'s'; });
+  });
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(function(el){ if(el.closest('.hero'))return; io.observe(el); });
+
+  // ====== Galería: deslizable + movimiento lento ======
+  (function(){
+    var gal=document.getElementById('gal'), track=document.getElementById('galTrack');
+    track.innerHTML += track.innerHTML;           // duplicar para bucle continuo
+    var single=0, pos=0, paused=false, pT;
+    function measure(){ single = track.scrollWidth/2; }
+    window.addEventListener('load', function(){ measure(); pos=0; requestAnimationFrame(tick); });
+    window.addEventListener('resize', measure);
+    function tick(){
+      if(!paused && single){
+        pos += 0.32;
+        if(pos>=single) pos-=single;
+        gal.scrollLeft=pos;
+      }
+      requestAnimationFrame(tick);
+    }
+    function pause(){ paused=true; clearTimeout(pT); pT=setTimeout(function(){ pos=gal.scrollLeft%(single||1); paused=false; }, 3500); }
+    ['pointerdown','touchstart','wheel'].forEach(function(ev){ gal.addEventListener(ev, pause, {passive:true}); });
+  })();
+</script>
+</body>
+</html>
